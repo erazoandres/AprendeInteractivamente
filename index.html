@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Aprendamos Conjuntos! 🎈</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 30px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 25px;
+            border-radius: 20px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 40px;
+            background: #e0e0e0;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 20px 0;
+            border: 4px solid #333;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 1.2em;
+        }
+
+        .level-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .level-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 5px solid transparent;
+            color: white;
+            position: relative;
+        }
+
+        .level-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            border-color: #FFD700;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        .level-card.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #9e9e9e;
+        }
+
+        .level-card.completed {
+            border-color: #4CAF50;
+        }
+
+        .level-card.completed::after {
+            content: "✓";
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #4CAF50;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .level-icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .level-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .activity-container {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .activity-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .instruction-box {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            font-size: 1.5em;
+            text-align: center;
+            border: 5px solid #e17055;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .instruction-box strong {
+            color: #d63031;
+            font-size: 1.2em;
+        }
+
+        .set-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin: 30px 0;
+            min-height: 300px;
+        }
+
+        .set {
+            position: relative;
+            min-width: 300px;
+            min-height: 300px;
+            border: 8px dashed #333;
+            border-radius: 50%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+        }
+
+        .set:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .set-label {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 2em;
+            font-weight: bold;
+            border: 4px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .item {
+            font-size: 4em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 15px;
+            border-radius: 15px;
+            background: white;
+            border: 4px solid transparent;
+        }
+
+        .item:hover {
+            transform: scale(1.3) rotate(10deg);
+            border-color: #FFD700;
+        }
+
+        .item.selected {
+            background: #4CAF50;
+            border-color: #2E7D32;
+            animation: pulse 0.5s ease;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .item.wrong {
+            animation: shake 0.5s ease;
+            background: #f44336;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .draggable-items {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            margin: 20px 0;
+            border: 5px solid #333;
+        }
+
+        .draggable {
+            font-size: 4em;
+            cursor: move;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            border: 4px solid #333;
+            transition: all 0.3s ease;
+        }
+
+        .draggable:hover {
+            transform: scale(1.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .draggable.dragging {
+            opacity: 0.5;
+            transform: scale(0.9);
+        }
+
+        .drop-zone {
+            min-width: 350px;
+            min-height: 350px;
+            border: 8px dashed #666;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.5);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .drop-zone.drag-over {
+            background: rgba(76, 175, 80, 0.3);
+            border-color: #4CAF50;
+            border-style: solid;
+            transform: scale(1.05);
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 20px 40px;
+            font-size: 1.5em;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            font-family: inherit;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #4CAF50 0%, #8BC34A 100%);
+            color: white;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #f44336 0%, #e91e63 100%);
+            color: white;
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #ff9800 0%, #ff5722 100%);
+            color: white;
+        }
+
+        .feedback {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: white;
+            padding: 50px;
+            border-radius: 30px;
+            text-align: center;
+            font-size: 3em;
+            font-weight: bold;
+            z-index: 1000;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            border: 8px solid;
+            transition: all 0.5s ease;
+        }
+
+        .feedback.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .feedback.success {
+            border-color: #4CAF50;
+            color: #4CAF50;
+            animation: celebrate 0.5s ease;
+        }
+
+        .feedback.error {
+            border-color: #f44336;
+            color: #f44336;
+        }
+
+        @keyframes celebrate {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1) rotate(5deg); }
+        }
+
+        .stars {
+            font-size: 2em;
+            margin-top: 20px;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #f0f;
+            position: absolute;
+            animation: confetti-fall 3s linear forwards;
+            z-index: 999;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .quiz-option {
+            padding: 30px;
+            background: white;
+            border: 5px solid #333;
+            border-radius: 20px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 1.5em;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            transform: scale(1.05);
+            border-color: #667eea;
+            background: #f0f0f0;
+        }
+
+        .quiz-option.correct {
+            background: #4CAF50;
+            color: white;
+            border-color: #2E7D32;
+        }
+
+        .quiz-option.incorrect {
+            background: #f44336;
+            color: white;
+            border-color: #c62828;
+        }
+
+        .score-display {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
+            margin: 20px 0;
+            border: 5px solid #FF8C00;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .typing-input {
+            width: 100%;
+            max-width: 300px;
+            padding: 20px;
+            font-size: 3em;
+            text-align: center;
+            border: 5px solid #333;
+            border-radius: 15px;
+            font-family: inherit;
+            font-weight: bold;
+            text-transform: uppercase;
+            background: #ffffcc;
+        }
+
+        .typing-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .hint-box {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 8px solid #2196F3;
+            margin: 20px 0;
+            font-size: 1.3em;
+        }
+
+        .example-set {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            border: 4px solid #333;
+            margin: 10px;
+            font-size: 1.5em;
+        }
+
+        .celebration-message {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 2em;
+            margin: 30px 0;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .trophy {
+            font-size: 5em;
+            animation: bounce 1s infinite;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .level-selector {
+                grid-template-columns: 1fr;
+            }
+            
+            .set {
+                min-width: 250px;
+                min-height: 250px;
+            }
+            
+            .item {
+                font-size: 3em;
+            }
+        }
+
+        .name-input-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .name-input {
+            padding: 15px 30px;
+            font-size: 1.8em;
+            border: 5px solid #667eea;
+            border-radius: 15px;
+            text-align: center;
+            font-family: inherit;
+            font-weight: bold;
+            background: #ffffcc;
+        }
+
+        .name-input:focus {
+            outline: none;
+            border-color: #f5576c;
+            box-shadow: 0 0 20px rgba(245, 87, 108, 0.5);
+        }
+
+        .welcome-message {
+            font-size: 2em;
+            color: #667eea;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .multiple-sets-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin: 30px 0;
+        }
+
+        .matching-game {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 30px 0;
+        }
+
+        .matching-column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .matching-item {
+            padding: 25px;
+            background: white;
+            border: 5px solid #333;
+            border-radius: 15px;
+            font-size: 1.5em;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .matching-item:hover {
+            transform: scale(1.05);
+            border-color: #667eea;
+        }
+
+        .matching-item.selected {
+            background: #667eea;
+            color: white;
+            border-color: #764ba2;
+        }
+
+        .matching-item.matched {
+            background: #4CAF50;
+            color: white;
+            border-color: #2E7D32;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎈 ¡Aprendamos Conjuntos! 🎈</h1>
+            <p style="font-size: 1.3em;">¡Vamos a divertirnos aprendiendo!</p>
+        </div>
+
+        <!-- Name Input Screen -->
+        <div id="name-screen" class="activity-container active">
+            <div class="instruction-box">
+                <p>👋 ¡Hola! ¿Cómo te llamas?</p>
+            </div>
+            <div class="name-input-container">
+                <input type="text" id="student-name" class="name-input" placeholder="Escribe tu nombre aquí" />
+            </div>
+            <div class="button-container">
+                <button class="btn btn-success" onclick="startLearning()">¡Empezar! 🚀</button>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div id="progress-section" style="display: none;">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill" style="width: 0%">
+                    <span id="progress-text">0%</span>
+                </div>
+            </div>
+            <div class="score-display" id="score-display">
+                <span id="student-welcome"></span> | 🌟 Puntos: <span id="score">0</span>/100
+            </div>
+        </div>
+
+        <!-- Level Selection -->
+        <div id="level-screen" class="activity-container" style="display: none;">
+            <div class="instruction-box">
+                <strong>Elige una lección:</strong> ¡Completa todas para ser un experto! 🎓
+            </div>
+            <div class="level-selector">
+                <div class="level-card" id="level-1" onclick="startLevel(1)">
+                    <span class="level-icon">🎯</span>
+                    <div class="level-title">Nivel 1</div>
+                    <p>¿Qué es un conjunto?</p>
+                </div>
+                <div class="level-card locked" id="level-2" onclick="startLevel(2)">
+                    <span class="level-icon">🔢</span>
+                    <div class="level-title">Nivel 2</div>
+                    <p>Elementos del conjunto</p>
+                </div>
+                <div class="level-card locked" id="level-3" onclick="startLevel(3)">
+                    <span class="level-icon">🎨</span>
+                    <div class="level-title">Nivel 3</div>
+                    <p>Dibuja conjuntos</p>
+                </div>
+                <div class="level-card locked" id="level-4" onclick="startLevel(4)">
+                    <span class="level-icon">🔤</span>
+                    <div class="level-title">Nivel 4</div>
+                    <p>Nombra conjuntos</p>
+                </div>
+                <div class="level-card locked" id="level-5" onclick="startLevel(5)">
+                    <span class="level-icon">🧩</span>
+                    <div class="level-title">Nivel 5</div>
+                    <p>Clasifica objetos</p>
+                </div>
+                <div class="level-card locked" id="level-6" onclick="startLevel(6)">
+                    <span class="level-icon">🏆</span>
+                    <div class="level-title">Examen Final</div>
+                    <p>¡Demuestra lo que sabes!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Level 1: What is a set? -->
+        <div id="level-1-activity" class="activity-container">
+            <div class="instruction-box">
+                <strong>¡Bienvenido al Nivel 1!</strong><br>
+                Un conjunto es un grupo de cosas que tienen algo en común.<br>
+                👉 <strong>Haz clic en los animales</strong> que ves aquí:
+            </div>
+            
+            <div class="hint-box">
+                💡 <strong>Pista:</strong> Estos son animales de granja. ¡Todos viven en una granja! 🐄🐷
+            </div>
+
+            <div class="set-container">
+                <div class="set" style="border-color: #4CAF50;">
+                    <div class="set-label">Conjunto A</div>
+                    <div class="item" onclick="selectItem(this, 'level1')" data-correct="true">🐄</div>
+                    <div class="item" onclick="selectItem(this, 'level1')" data-correct="true">🐷</div>
+                    <div class="item" onclick="selectItem(this, 'level1')" data-correct="true">🐔</div>
+                    <div class="item" onclick="selectItem(this, 'level1')" data-correct="true">🐴</div>
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button class="btn btn-success" onclick="checkLevel1()">¡Verificar! ✓</button>
+                <button class="btn btn-warning" onclick="backToLevels()">Volver 🔙</button>
+            </div>
+        </div>
+
+        <!-- Level 2: Elements of a set -->
+        <div id="level-2-activity" class="activity-container">
+            <div class="instruction-box">
+                <strong>Nivel 2: Elementos del Conjunto</strong><br>
+                Cada cosa dentro de un conjunto se llama <strong>ELEMENTO</strong>.<br>
+                👉 <strong>¿Cuántos elementos hay en cada conjunto?</strong>
+            </div>
+
+            <div class="multiple-sets-container">
+                <div>
+                    <div class="set" style="border-color: #FF6B6B;">
+                        <div class="set-label">Conjunto B</div>
+                        <div class="item">🍎</div>
+                        <div class="item">🍊</div>
+                        <div class="item">🍌</div>
+                    </div>
+                    <div style="text-align: center; margin-top: 20px;">
+                        <input type="number" id="count-b" class="typing-input" style="max-width: 150px; font-size: 2em;" placeholder="?" min="0" max="10" />
+                        <p style="font-size: 1.5em; margin-top: 10px;">elementos</p>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="set" style="border-color: #4ECDC4;">
+                        <div class="set-label">Conjunto C</div>
+                        <div class="item">⚽</div>
+                        <div class="item">🏀</div>
+                        <div class="item">🎾</div>
+                        <div class="item">⚾</div>
+                        <div class="item">🏐</div>
+                    </div>
+                    <div style="text-align: center; margin-top: 20px;">
+                        <input type="number" id="count-c" class="typing-input" style="max-width: 150px; font-size: 2em;" placeholder="?" min="0" max="10" />
+                        <p style="font-size: 1.5em; margin-top: 10px;">elementos</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button class="btn btn-success" onclick="checkLevel2()">¡Verificar! ✓</button>
+                <button class="btn btn-warning" onclick="backToLevels()">Volver 🔙</button>
+            </div>
+        </div>
+
+        <!-- Level 3: Draw sets (Drag and Drop) -->
+        <div id="level-3-activity" class="activity-container">
+            <div class="instruction-box">
+                <strong>Nivel 3: ¡Crea tus propios conjuntos!</strong><br>
+                👉 <strong>Arrastra</strong> las frutas al conjunto de FRUTAS 🍎<br>
+                👉 <strong>Arrastra</strong> los animales al conjunto de ANIMALES 🐶
+            </div>
+
+            <div class="draggable-items" id="draggable-items-level3">
+                <div class="draggable" draggable="true" data-type="fruta">🍎</div>
+                <div class="draggable" draggable="true" data-type="animal">🐶</div>
+                <div class="draggable" draggable="true" data-type="fruta">🍌</div>
+                <div class="draggable" draggable="true" data-type="animal">🐱</div>
+                <div class="draggable" draggable="true" data-type="fruta">🍇</div>
+                <div class="draggable" draggable="true" data-type="animal">🐭</div>
+                <div class="draggable" draggable="true" data-type="fruta">🍊</div>
+                <div class="draggable" draggable="true" data-type="animal">🐰</div>
+            </div>
+
+            <div class="set-container">
+                <div class="drop-zone" data-accepts="fruta" style="border-color: #FF6B6B;">
+                    <div class="set-label" style="background: #FF6B6B;">Frutas 🍎</div>
+                </div>
+                <div class="drop-zone" data-accepts="animal" style="border-color: #4ECDC4;">
+                    <div class="set-label" style="background: #4ECDC4;">Animales 🐶</div>
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button class="btn btn-success" onclick="checkLevel3()">¡Verificar! ✓</button>
+                <button class="btn btn-danger" onclick="resetLevel3()">Reiniciar 🔄</button>
+                <button class="btn btn-warning" onclick="backToLevels()">Volver 🔙</button>
+            </div>
+        </div>
+
+        <!-- Level 4: Name sets with letters -->
+        <div id="level-4-activity" class="activity-container">
+            <div class="instruction-box">
+                <strong>Nivel 4: ¡Dale un nombre a los conjuntos!</strong><br>
+                Los conjuntos se nombran con <strong>LETRAS MAYÚSCULAS</strong> (A, B, C, D...)<br>
+                👉 Escribe la letra que falta para cada conjunto:
+            </div>
+
+            <div class="hint-box">
+                💡 <strong>Recuerda:</strong> Usamos letras mayúsculas como A, B, C, D, E, F...
+            </div>
+
+            <div class="multiple-sets-container">
+                <div style="text-align: center;">
+                    <p style="font-size: 2em; margin-bottom: 15px;">Conjunto ___</p>
+                    <input type="text" id="name-set-1" class="typing-input" maxlength="1" placeholder="?" />
+                    <div class="set" style="border-color: #9B59B6; margin-top: 20px;">
+                        <div class="item">🚗</div>
+                        <div class="item">🚕</div>
+                        <div class="item">🚙</div>
+                    </div>
+                    <p style="font-size: 1.3em; margin-top: 15px; color: #666;">Vehículos</p>
+                </div>
+
+                <div style="text-align: center;">
+                    <p style="font-size: 2em; margin-bottom: 15px;">Conjunto ___</p>
+                    <input type="text" id="name-set-2" class="typing-input" maxlength="1" placeholder="?" />
+                    <div class="set" style="border-color: #E74C3C; margin-top: 20px;">
+                        <div class="item">⭐</div>
+                        <div class="item">🌟</div>
+                        <div class="item">✨</div>
+                    </div>
+                    <p style="font-size: 1.3em; margin-top: 15px; color: #666;">Estrellas</p>
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button class="btn btn-success" onclick="checkLevel4()">¡Verificar! ✓</button>
+                <button class="btn btn-warning" onclick="backToLevels()">Volver 🔙</button>
+            </div>
+        </div>
+
+        <!-- Level 5: Classify objects -->
+        <div id="level-5-activity" class="activity-container">
+            <div class="instruction-box">
+                <strong>Nivel 5: ¡Clasifica los objetos!</strong><br>
+                👉 Arrastra cada objeto al conjunto correcto según su categoría:
+            </div>
+
+            <div class="draggable-items" id="draggable-items-level5">
+                <div class="draggable" draggable="true" data-type="escolar">✏️</div>
+                <div class="draggable" draggable="true" data-type="juguete">🧸</div>
+                <div class="draggable" draggable="true" data-type="escolar">📚</div>
+                <div class="draggable" draggable="true" data-type="ropa">👕</div>
+                <div class="draggable" draggable="true" data-type="juguete">🎮</div>
+                <div class="draggable" draggable="true" data-type="ropa">👟</div>
+                <div class="draggable" draggable="true" data-type="escolar">✂️</div>
+                <div class="draggable" draggable="true" data-type="juguete">🎲</div>
+                <div class="draggable" draggable="true" data-type="ropa">🧢</div>
+            </div>
+
+            <div class="multiple-sets-container">
+                <div class="drop-zone" data-accepts="escolar" style="border-color: #3498DB;">
+                    <div class="set-label" style="background: #3498DB;">Útiles Escolares 📚</div>
+                </div>
+                <div class="drop-zone" data-accepts="juguete" style="border-color: #E67E22;">
+                    <div class="set-label" style="background: #E67E22;">Juguetes 🎮</div>
+                </div>
+                <div class="drop-zone" data-accepts="ropa" style="border-color: #9B59B6;">
+                    <div class="set-label" style="background: #9B59B6;">Ropa 👕</div>
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button class="btn btn-success" onclick="checkLevel5()">¡Verificar! ✓</button>
+                <button class="btn btn-danger" onclick="resetLevel5()">Reiniciar 🔄</button>
+                <button class="btn btn-warning" onclick="backToLevels()">Volver 🔙</button>
+            </div>
+        </div>
+
+        <!-- Level 6: Final Exam -->
+        <div id="level-6-activity" class="activity-container">
+            <div class="instruction-box">
+                <strong>🏆 ¡EXAMEN FINAL! 🏆</strong><br>
+                ¡Demuestra todo lo que has aprendido!<br>
+                Responde correctamente para ser un EXPERTO en Conjuntos 🎓
+            </div>
+
+            <div id="exam-questions">
+                <!-- Question 1 -->
+                <div class="exam-question" id="exam-q1">
+                    <div style="background: #E8F5E9; padding: 25px; border-radius: 15px; margin: 20px 0; border: 4px solid #4CAF50;">
+                        <h3 style="font-size: 2em; margin-bottom: 20px;">Pregunta 1 de 5:</h3>
+                        <p style="font-size: 1.8em; margin-bottom: 20px;">
+                            ¿Qué es un conjunto?
+                        </p>
+                        <div class="quiz-options">
+                            <div class="quiz-option" onclick="answerExam(1, 'b', this)">
+                                Un grupo de cosas que tienen algo en común
+                            </div>
+                            <div class="quiz-option" onclick="answerExam(1, 'a', this)">
+                                Un solo objeto
+                            </div>
+                            <div class="quiz-option" onclick="answerExam(1, 'c', this)">
+                                Un número
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="exam-question" id="exam-q2" style="display: none;">
+                    <div style="background: #FFF3E0; padding: 25px; border-radius: 15px; margin: 20px 0; border: 4px solid #FF9800;">
+                        <h3 style="font-size: 2em; margin-bottom: 20px;">Pregunta 2 de 5:</h3>
+                        <p style="font-size: 1.8em; margin-bottom: 20px;">
+                            ¿Cómo se llama cada cosa dentro de un conjunto?
+                        </p>
+                        <div class="quiz-options">
+                            <div class="quiz-option" onclick="answerExam(2, 'a', this)">
+                                Grupo
+                            </div>
+                            <div class="quiz-option" onclick="answerExam(2, 'b', this)">
+                                Elemento
+                            </div>
+                            <div class="quiz-option" onclick="answerExam(2, 'c', this)">
+                                Letra
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="exam-question" id="exam-q3" style="display: none;">
+                    <div style="background: #F3E5F5; padding: 25px; border-radius: 15px; margin: 20px 0; border: 4px solid #9C27B0;">
+                        <h3 style="font-size: 2em; margin-bottom: 20px;">Pregunta 3 de 5:</h3>
+                        <p style="font-size: 1.8em; margin-bottom: 20px;">
+                            ¿Cuántos elementos tiene este conjunto?
+                        </p>
+                        <div class="set" style="border-color: #9C27B0; margin: 30px auto;">
+                            <div class="item">🌸</div>
+                            <div class="item">🌺</div>
+                            <div class="item">🌻</div>
+                            <div class="item">🌷</div>
+                        </div>
+                        <div class="quiz-options">
+                            <div class="quiz-option" onclick="answerExam(3, 'a', this)">3 elementos</div>
+                            <div class="quiz-option" onclick="answerExam(3, 'b', this)">4 elementos</div>
+                            <div class="quiz-option" onclick="answerExam(3, 'c', this)">5 elementos</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="exam-question" id="exam-q4" style="display: none;">
+                    <div style="background: #E1F5FE; padding: 25px; border-radius: 15px; margin: 20px 0; border: 4px solid #03A9F4;">
+                        <h3 style="font-size: 2em; margin-bottom: 20px;">Pregunta 4 de 5:</h3>
+                        <p style="font-size: 1.8em; margin-bottom: 20px;">
+                            ¿Con qué letras nombramos los conjuntos?
+                        </p>
+                        <div class="quiz-options">
+                            <div class="quiz-option" onclick="answerExam(4, 'a', this)">Letras minúsculas (a, b, c)</div>
+                            <div class="quiz-option" onclick="answerExam(4, 'b', this)">Letras MAYÚSCULAS (A, B, C)</div>
+                            <div class="quiz-option" onclick="answerExam(4, 'c', this)">Números (1, 2, 3)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="exam-question" id="exam-q5" style="display: none;">
+                    <div style="background: #FFEBEE; padding: 25px; border-radius: 15px; margin: 20px 0; border: 4px solid #F44336;">
+                        <h3 style="font-size: 2em; margin-bottom: 20px;">Pregunta 5 de 5:</h3>
+                        <p style="font-size: 1.8em; margin-bottom: 20px;">
+                            Observa estos dos conjuntos. ¿Cuál tiene MÁS elementos?
+                        </p>
+                        <div class="multiple-sets-container">
+                            <div>
+                                <div class="set" style="border-color: #FF6B6B;">
+                                    <div class="set-label" style="background: #FF6B6B;">Conjunto A</div>
+                                    <div class="item">🎈</div>
+                                    <div class="item">🎈</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="set" style="border-color: #4ECDC4;">
+                                    <div class="set-label" style="background: #4ECDC4;">Conjunto B</div>
+                                    <div class="item">⭐</div>
+                                    <div class="item">⭐</div>
+                                    <div class="item">⭐</div>
+                                    <div class="item">⭐</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="quiz-options">
+                            <div class="quiz-option" onclick="answerExam(5, 'a', this)">Conjunto A</div>
+                            <div class="quiz-option" onclick="answerExam(5, 'b', this)">Conjunto B</div>
+                            <div class="quiz-option" onclick="answerExam(5, 'c', this)">Tienen lo mismo</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button class="btn btn-warning" onclick="backToLevels()">Volver 🔙</button>
+            </div>
+        </div>
+
+        <!-- Final Results -->
+        <div id="final-results" class="activity-container">
+            <div class="celebration-message">
+                <div class="trophy">🏆</div>
+                <h2 style="font-size: 3em; margin: 20px 0;">¡FELICITACIONES!</h2>
+                <p id="final-message" style="font-size: 1.8em; margin: 20px 0;"></p>
+                <div class="stars" id="final-stars"></div>
+                <p style="font-size: 2em; margin: 30px 0;">
+                    Puntuación Final: <span id="final-score" style="font-size: 1.5em; color: #FFD700;">0</span>/100
+                </p>
+            </div>
+            <div class="button-container">
+                <button class="btn btn-success" onclick="restartAllLevels()">¡Jugar de Nuevo! 🔄</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feedback Modal -->
+    <div class="feedback" id="feedback"></div>
+
+    <script>
+        // Global variables
+        let studentName = '';
+        let currentLevel = 0;
+        let totalScore = 0;
+        let completedLevels = [];
+        let examAnswers = {
+            1: 'b', // Un grupo de cosas que tienen algo en común
+            2: 'b', // Elemento
+            3: 'b', // 4 elementos
+            4: 'b', // Letras MAYÚSCULAS
+            5: 'b'  // Conjunto B
+        };
+        let examScore = 0;
+        let currentExamQuestion = 1;
+
+        // Audio feedback (using Web Audio API)
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playSound(type) {
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            if (type === 'success') {
+                oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
+                oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1); // E5
+                oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.2); // G5
+            } else if (type === 'error') {
+                oscillator.frequency.setValueAtTime(200, audioContext.currentTime);
+                oscillator.frequency.setValueAtTime(100, audioContext.currentTime + 0.1);
+            } else if (type === 'click') {
+                oscillator.frequency.setValueAtTime(400, audioContext.currentTime);
+            }
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.3);
+        }
+
+        function startLearning() {
+            studentName = document.getElementById('student-name').value.trim();
+            if (studentName === '') {
+                alert('¡Por favor escribe tu nombre! 😊');
+                return;
+            }
+            playSound('success');
+            document.getElementById('name-screen').classList.remove('active');
+            document.getElementById('level-screen').style.display = 'block';
+            document.getElementById('level-screen').classList.add('active');
+            document.getElementById('progress-section').style.display = 'block';
+            document.getElementById('student-welcome').textContent = `¡Hola ${studentName}!`;
+            createConfetti();
+        }
+
+        function startLevel(levelNum) {
+            if (levelNum > 1 && !completedLevels.includes(levelNum - 1)) {
+                showFeedback('¡Completa el nivel anterior primero! 🔒', 'error');
+                return;
+            }
+            playSound('click');
+            currentLevel = levelNum;
+            document.getElementById('level-screen').classList.remove('active');
+            document.getElementById('level-screen').style.display = 'none';
+            document.getElementById(`level-${levelNum}-activity`).style.display = 'block';
+            document.getElementById(`level-${levelNum}-activity`).classList.add('active');
+            
+            // Initialize drag and drop for levels that need it
+            if (levelNum === 3) {
+                initDragAndDrop('level3');
+            } else if (levelNum === 5) {
+                initDragAndDrop('level5');
+            }
+        }
+
+        function backToLevels() {
+            playSound('click');
+            document.querySelectorAll('.activity-container').forEach(el => {
+                el.classList.remove('active');
+                el.style.display = 'none';
+            });
+            document.getElementById('level-screen').style.display = 'block';
+            document.getElementById('level-screen').classList.add('active');
+        }
+
+        function selectItem(item, level) {
+            playSound('click');
+            item.classList.toggle('selected');
+        }
+
+        function checkLevel1() {
+            const selectedItems = document.querySelectorAll('#level-1-activity .item.selected');
+            if (selectedItems.length === 4) {
+                playSound('success');
+                completeLevel(1, 15);
+                showFeedback('¡Excelente! 🎉 ¡Todos son animales de granja!', 'success');
+                setTimeout(() => {
+                    backToLevels();
+                }, 2000);
+            } else {
+                playSound('error');
+                showFeedback('¡Intenta seleccionar TODOS los animales! 🐄', 'error');
+            }
+        }
+
+        function checkLevel2() {
+            const countB = parseInt(document.getElementById('count-b').value);
+            const countC = parseInt(document.getElementById('count-c').value);
+            
+            if (countB === 3 && countC === 5) {
+                playSound('success');
+                completeLevel(2, 20);
+                showFeedback('¡Perfecto! 🌟 ¡Contaste bien todos los elementos!', 'success');
+                setTimeout(() => {
+                    backToLevels();
+                }, 2000);
+            } else {
+                playSound('error');
+                showFeedback('¡Cuenta de nuevo! Mira bien cuántos hay en cada conjunto 👀', 'error');
+            }
+        }
+
+        function initDragAndDrop(level) {
+            const containerId = level === 'level3' ? 'draggable-items-level3' : 'draggable-items-level5';
+            const draggables = document.querySelectorAll(`#${containerId} .draggable`);
+            const dropZones = document.querySelectorAll(`#level-${level === 'level3' ? '3' : '5'}-activity .drop-zone`);
+
+            draggables.forEach(draggable => {
+                draggable.addEventListener('dragstart', () => {
+                    draggable.classList.add('dragging');
+                    playSound('click');
+                });
+
+                draggable.addEventListener('dragend', () => {
+                    draggable.classList.remove('dragging');
+                });
+            });
+
+            dropZones.forEach(zone => {
+                zone.addEventListener('dragover', e => {
+                    e.preventDefault();
+                    zone.classList.add('drag-over');
+                });
+
+                zone.addEventListener('dragleave', () => {
+                    zone.classList.remove('drag-over');
+                });
+
+                zone.addEventListener('drop', e => {
+                    e.preventDefault();
+                    zone.classList.remove('drag-over');
+                    const dragging = document.querySelector('.dragging');
+                    if (dragging) {
+                        zone.appendChild(dragging);
+                        playSound('success');
+                    }
+                });
+            });
+        }
+
+        function checkLevel3() {
+            const dropZones = document.querySelectorAll('#level-3-activity .drop-zone');
+            let correct = true;
+
+            dropZones.forEach(zone => {
+                const acceptType = zone.dataset.accepts;
+                const items = zone.querySelectorAll('.draggable');
+                items.forEach(item => {
+                    if (item.dataset.type !== acceptType) {
+                        correct = false;
+                    }
+                });
+            });
+
+            const remainingItems = document.querySelectorAll('#draggable-items-level3 .draggable');
+            if (remainingItems.length > 0) {
+                correct = false;
+            }
+
+            if (correct) {
+                playSound('success');
+                completeLevel(3, 25);
+                showFeedback('¡Increíble! 🎨 ¡Clasificaste todo perfectamente!', 'success');
+                setTimeout(() => {
+                    backToLevels();
+                }, 2000);
+            } else {
+                playSound('error');
+                showFeedback('¡Revisa bien! 🔍 Algunas cosas están en el conjunto equivocado', 'error');
+            }
+        }
+
+        function resetLevel3() {
+            playSound('click');
+            const draggables = document.querySelectorAll('#level-3-activity .draggable');
+            const container = document.getElementById('draggable-items-level3');
+            draggables.forEach(item => {
+                container.appendChild(item);
+            });
+        }
+
+        function checkLevel4() {
+            const name1 = document.getElementById('name-set-1').value.toUpperCase().trim();
+            const name2 = document.getElementById('name-set-2').value.toUpperCase().trim();
+            
+            // Accept any uppercase letter
+            const isValid1 = /^[A-Z]$/.test(name1);
+            const isValid2 = /^[A-Z]$/.test(name2);
+            
+            if (isValid1 && isValid2 && name1 !== name2) {
+                playSound('success');
+                completeLevel(4, 20);
+                showFeedback(`¡Fantástico! 🔤 Usaste letras mayúsculas: ${name1} y ${name2}`, 'success');
+                setTimeout(() => {
+                    backToLevels();
+                }, 2000);
+            } else if (!isValid1 || !isValid2) {
+                playSound('error');
+                showFeedback('¡Recuerda usar LETRAS MAYÚSCULAS! Como A, B, C, D...', 'error');
+            } else {
+                playSound('error');
+                showFeedback('¡Los dos conjuntos deben tener letras DIFERENTES! 😊', 'error');
+            }
+        }
+
+        function checkLevel5() {
+            const dropZones = document.querySelectorAll('#level-5-activity .drop-zone');
+            let correct = true;
+
+            dropZones.forEach(zone => {
+                const acceptType = zone.dataset.accepts;
+                const items = zone.querySelectorAll('.draggable');
+                items.forEach(item => {
+                    if (item.dataset.type !== acceptType) {
+                        correct = false;
+                    }
+                });
+            });
+
+            const remainingItems = document.querySelectorAll('#draggable-items-level5 .draggable');
+            if (remainingItems.length > 0) {
+                correct = false;
+            }
+
+            if (correct) {
+                playSound('success');
+                completeLevel(5, 20);
+                showFeedback('¡Eres un genio! 🧩 ¡Clasificaste todo correctamente!', 'success');
+                setTimeout(() => {
+                    backToLevels();
+                }, 2000);
+            } else {
+                playSound('error');
+                showFeedback('¡Casi! 💪 Revisa que cada cosa esté en su conjunto correcto', 'error');
+            }
+        }
+
+        function resetLevel5() {
+            playSound('click');
+            const draggables = document.querySelectorAll('#level-5-activity .draggable');
+            const container = document.getElementById('draggable-items-level5');
+            draggables.forEach(item => {
+                container.appendChild(item);
+            });
+        }
+
+        function answerExam(questionNum, answer, element) {
+            playSound('click');
+            const isCorrect = examAnswers[questionNum] === answer;
+            
+            if (isCorrect) {
+                element.classList.add('correct');
+                examScore += 4; // 20 points total / 5 questions = 4 points each
+                playSound('success');
+                setTimeout(() => {
+                    if (questionNum < 5) {
+                        document.getElementById(`exam-q${questionNum}`).style.display = 'none';
+                        document.getElementById(`exam-q${questionNum + 1}`).style.display = 'block';
+                    } else {
+                        finishExam();
+                    }
+                }, 1500);
+            } else {
+                element.classList.add('incorrect');
+                playSound('error');
+                setTimeout(() => {
+                    element.classList.remove('incorrect');
+                }, 1000);
+            }
+        }
+
+        function finishExam() {
+            completeLevel(6, examScore);
+            document.querySelectorAll('.activity-container').forEach(el => {
+                el.classList.remove('active');
+                el.style.display = 'none';
+            });
+            
+            const finalMessage = document.getElementById('final-message');
+            const finalStars = document.getElementById('final-stars');
+            
+            if (totalScore >= 90) {
+                finalMessage.textContent = `${studentName}, ¡Eres un EXPERTO en Conjuntos! 🎓`;
+                finalStars.innerHTML = '⭐⭐⭐⭐⭐';
+            } else if (totalScore >= 75) {
+                finalMessage.textContent = `${studentName}, ¡Excelente trabajo! 🌟`;
+                finalStars.innerHTML = '⭐⭐⭐⭐';
+            } else if (totalScore >= 60) {
+                finalMessage.textContent = `${studentName}, ¡Muy bien! Sigue practicando 💪`;
+                finalStars.innerHTML = '⭐⭐⭐';
+            } else {
+                finalMessage.textContent = `${studentName}, ¡Buen intento! Practica más 😊`;
+                finalStars.innerHTML = '⭐⭐';
+            }
+            
+            document.getElementById('final-score').textContent = totalScore;
+            document.getElementById('final-results').style.display = 'block';
+            document.getElementById('final-results').classList.add('active');
+            createConfetti();
+            playSound('success');
+        }
+
+        function completeLevel(levelNum, points) {
+            if (!completedLevels.includes(levelNum)) {
+                completedLevels.push(levelNum);
+                totalScore += points;
+                updateProgress();
+                
+                // Unlock next level
+                if (levelNum < 6) {
+                    const nextLevel = document.getElementById(`level-${levelNum + 1}`);
+                    nextLevel.classList.remove('locked');
+                }
+                
+                // Mark as completed
+                const levelCard = document.getElementById(`level-${levelNum}`);
+                levelCard.classList.add('completed');
+                
+                createConfetti();
+            }
+        }
+
+        function updateProgress() {
+            const progress = (totalScore / 100) * 100;
+            document.getElementById('progress-fill').style.width = `${progress}%`;
+            document.getElementById('progress-text').textContent = `${Math.round(progress)}%`;
+            document.getElementById('score').textContent = totalScore;
+        }
+
+        function showFeedback(message, type) {
+            const feedback = document.getElementById('feedback');
+            feedback.textContent = message;
+            feedback.className = `feedback ${type}`;
+            feedback.classList.add('show');
+            setTimeout(() => {
+                feedback.classList.remove('show');
+            }, 3000);
+        }
+
+        function createConfetti() {
+            const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F7DC6F', '#BB8FCE'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    document.body.appendChild(confetti);
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 30);
+            }
+        }
+
+        function restartAllLevels() {
+            playSound('click');
+            completedLevels = [];
+            totalScore = 0;
+            examScore = 0;
+            currentExamQuestion = 1;
+            updateProgress();
+            
+            // Reset all level cards
+            for (let i = 1; i <= 6; i++) {
+                const levelCard = document.getElementById(`level-${i}`);
+                levelCard.classList.remove('completed');
+                if (i > 1) {
+                    levelCard.classList.add('locked');
+                }
+            }
+            
+            // Reset exam questions
+            for (let i = 1; i <= 5; i++) {
+                document.getElementById(`exam-q${i}`).style.display = i === 1 ? 'block' : 'none';
+                const options = document.querySelectorAll(`#exam-q${i} .quiz-option`);
+                options.forEach(opt => {
+                    opt.classList.remove('correct', 'incorrect');
+                });
+            }
+            
+            // Reset inputs
+            document.getElementById('count-b').value = '';
+            document.getElementById('count-c').value = '';
+            document.getElementById('name-set-1').value = '';
+            document.getElementById('name-set-2').value = '';
+            
+            // Reset drag and drop
+            resetLevel3();
+            resetLevel5();
+            
+            // Reset selections in level 1
+            document.querySelectorAll('#level-1-activity .item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            
+            backToLevels();
+        }
+    </script>
+</body>
+</html>
