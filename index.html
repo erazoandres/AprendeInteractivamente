@@ -622,20 +622,20 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🎈 ¡Aprendamos Conjuntos! 🎈</h1>
-            <p style="font-size: 1.3em;">¡Vamos a divertirnos aprendiendo!</p>
+            <h1>🎈 Vamos a jugar 🎈</h1>
+            <p style="font-size: 1.3em;">¡Aprende los conjuntos!</p>
         </div>
 
         <!-- Name Input Screen -->
         <div id="name-screen" class="activity-container active">
             <div class="instruction-box">
-                <p>👋 ¡Hola! ¿Cómo te llamas?</p>
+                <p>👋 Hola! ¿Cómo te llamas?</p>
             </div>
             <div class="name-input-container">
-                <input type="text" id="student-name" class="name-input" placeholder="Escribe tu nombre aquí" />
+                <input type="text" id="student-name" class="name-input" placeholder="Tu nombre" />
             </div>
             <div class="button-container">
-                <button class="btn btn-success" onclick="startLearning()">¡Empezar! 🚀</button>
+                <button class="btn btn-success" onclick="startLearning()">¡Vamos! 🚀</button>
             </div>
         </div>
 
@@ -654,38 +654,38 @@
         <!-- Level Selection -->
         <div id="level-screen" class="activity-container" style="display: none;">
             <div class="instruction-box">
-                <strong>Elige una lección:</strong> ¡Completa todas para ser un experto! 🎓
+                <strong>Elige un juego:</strong> ¡Juega todos! 🎓
             </div>
             <div class="level-selector">
                 <div class="level-card" id="level-1" onclick="startLevel(1)">
                     <span class="level-icon">🎯</span>
-                    <div class="level-title">Nivel 1</div>
+                    <div class="level-title">Juego 1</div>
                     <p>¿Qué es un conjunto?</p>
                 </div>
                 <div class="level-card locked" id="level-2" onclick="startLevel(2)">
                     <span class="level-icon">🔢</span>
-                    <div class="level-title">Nivel 2</div>
-                    <p>Elementos del conjunto</p>
+                    <div class="level-title">Juego 2</div>
+                    <p>Contar las cosas</p>
                 </div>
                 <div class="level-card locked" id="level-3" onclick="startLevel(3)">
                     <span class="level-icon">🎨</span>
-                    <div class="level-title">Nivel 3</div>
-                    <p>Dibuja conjuntos</p>
+                    <div class="level-title">Juego 3</div>
+                    <p>Mover las cosas</p>
                 </div>
                 <div class="level-card locked" id="level-4" onclick="startLevel(4)">
                     <span class="level-icon">🔤</span>
-                    <div class="level-title">Nivel 4</div>
-                    <p>Nombra conjuntos</p>
+                    <div class="level-title">Juego 4</div>
+                    <p>Poner letras</p>
                 </div>
                 <div class="level-card locked" id="level-5" onclick="startLevel(5)">
                     <span class="level-icon">🧩</span>
-                    <div class="level-title">Nivel 5</div>
-                    <p>Clasifica objetos</p>
+                    <div class="level-title">Juego 5</div>
+                    <p>Juntar lo que es igual</p>
                 </div>
                 <div class="level-card locked" id="level-6" onclick="startLevel(6)">
                     <span class="level-icon">🏆</span>
-                    <div class="level-title">Examen Final</div>
-                    <p>¡Demuestra lo que sabes!</p>
+                    <div class="level-title">Examen</div>
+                    <p>¡A ver qué sabes!</p>
                 </div>
             </div>
         </div>
@@ -693,13 +693,13 @@
         <!-- Level 1: What is a set? -->
         <div id="level-1-activity" class="activity-container">
             <div class="instruction-box">
-                <strong>¡Bienvenido al Nivel 1!</strong><br>
-                Un conjunto es un grupo de cosas que tienen algo en común.<br>
-                👉 <strong>Haz clic en los animales</strong> que ves aquí:
+                <strong>¡Juego 1!</strong><br>
+                Un conjunto es un grupo de cosas.<br>
+                👉 <strong>Toca los animales</strong> que ves:
             </div>
             
             <div class="hint-box">
-                💡 <strong>Pista:</strong> Estos son animales de granja. ¡Todos viven en una granja! 🐄🐷
+                💡 <strong>Ayuda:</strong> Son animales de la granja. ¡Todos viven en la granja! 🐄🐷
             </div>
 
             <div class="set-container">
@@ -713,7 +713,7 @@
             </div>
 
             <div class="button-container">
-                <button class="btn btn-success" onclick="checkLevel1()">¡Verificar! ✓</button>
+                <button class="btn btn-success" onclick="checkLevel1()">¡Ver si está bien! ✓</button>
                 <button class="btn btn-warning" onclick="backToLevels()">Volver 🔙</button>
             </div>
         </div>
@@ -721,9 +721,9 @@
         <!-- Level 2: Elements of a set -->
         <div id="level-2-activity" class="activity-container">
             <div class="instruction-box">
-                <strong>Nivel 2: Elementos del Conjunto</strong><br>
-                Cada cosa dentro de un conjunto se llama <strong>ELEMENTO</strong>.<br>
-                👉 <strong>¿Cuántos elementos hay en cada conjunto?</strong>
+                <strong>Juego 2: Contar</strong><br>
+                Cada cosa del grupo se llama <strong>ELEMENTO</strong>.<br>
+                👉 <strong>¿Cuántos hay?</strong> Cuenta bien:
             </div>
 
             <div class="multiple-sets-container">
@@ -736,7 +736,7 @@
                     </div>
                     <div style="text-align: center; margin-top: 20px;">
                         <input type="number" id="count-b" class="typing-input" style="max-width: 150px; font-size: 2em;" placeholder="?" min="0" max="10" />
-                        <p style="font-size: 1.5em; margin-top: 10px;">elementos</p>
+                        <p style="font-size: 1.5em; margin-top: 10px;">cosas</p>
                     </div>
                 </div>
 
@@ -751,13 +751,13 @@
                     </div>
                     <div style="text-align: center; margin-top: 20px;">
                         <input type="number" id="count-c" class="typing-input" style="max-width: 150px; font-size: 2em;" placeholder="?" min="0" max="10" />
-                        <p style="font-size: 1.5em; margin-top: 10px;">elementos</p>
+                        <p style="font-size: 1.5em; margin-top: 10px;">cosas</p>
                     </div>
                 </div>
             </div>
 
             <div class="button-container">
-                <button class="btn btn-success" onclick="checkLevel2()">¡Verificar! ✓</button>
+                <button class="btn btn-success" onclick="checkLevel2()">¡Ver si está bien! ✓</button>
                 <button class="btn btn-warning" onclick="backToLevels()">Volver 🔙</button>
             </div>
         </div>
@@ -765,9 +765,9 @@
         <!-- Level 3: Draw sets (Drag and Drop) -->
         <div id="level-3-activity" class="activity-container">
             <div class="instruction-box">
-                <strong>Nivel 3: ¡Crea tus propios conjuntos!</strong><br>
-                👉 <strong>Arrastra</strong> las frutas al conjunto de FRUTAS 🍎<br>
-                👉 <strong>Arrastra</strong> los animales al conjunto de ANIMALES 🐶
+                <strong>Juego 3: ¡Mueve las cosas!</strong><br>
+                👉 <strong>Arrastra</strong> las frutas al círculo de FRUTAS 🍎<br>
+                👉 <strong>Arrastra</strong> los animales al círculo de ANIMALES 🐶
             </div>
 
             <div class="draggable-items" id="draggable-items-level3">
@@ -791,8 +791,8 @@
             </div>
 
             <div class="button-container">
-                <button class="btn btn-success" onclick="checkLevel3()">¡Verificar! ✓</button>
-                <button class="btn btn-danger" onclick="resetLevel3()">Reiniciar 🔄</button>
+                <button class="btn btn-success" onclick="checkLevel3()">¡Ver si está bien! ✓</button>
+                <button class="btn btn-danger" onclick="resetLevel3()">Empezar de nuevo 🔄</button>
                 <button class="btn btn-warning" onclick="backToLevels()">Volver 🔙</button>
             </div>
         </div>
@@ -800,13 +800,13 @@
         <!-- Level 4: Name sets with letters -->
         <div id="level-4-activity" class="activity-container">
             <div class="instruction-box">
-                <strong>Nivel 4: ¡Dale un nombre a los conjuntos!</strong><br>
-                Los conjuntos se nombran con <strong>LETRAS MAYÚSCULAS</strong> (A, B, C, D...)<br>
-                👉 Escribe la letra que falta para cada conjunto:
+                <strong>Juego 4: ¡Pon una letra!</strong><br>
+                Los conjuntos tienen <strong>LETRAS GRANDES</strong> (A, B, C, D...)<br>
+                👉 Escribe una letra para cada grupo:
             </div>
 
             <div class="hint-box">
-                💡 <strong>Recuerda:</strong> Usamos letras mayúsculas como A, B, C, D, E, F...
+                💡 <strong>Ayuda:</strong> Usa letras grandes como A, B, C, D, E, F...
             </div>
 
             <div class="multiple-sets-container">
@@ -818,7 +818,7 @@
                         <div class="item">🚕</div>
                         <div class="item">🚙</div>
                     </div>
-                    <p style="font-size: 1.3em; margin-top: 15px; color: #666;">Vehículos</p>
+                    <p style="font-size: 1.3em; margin-top: 15px; color: #666;">Carros</p>
                 </div>
 
                 <div style="text-align: center;">
@@ -834,7 +834,7 @@
             </div>
 
             <div class="button-container">
-                <button class="btn btn-success" onclick="checkLevel4()">¡Verificar! ✓</button>
+                <button class="btn btn-success" onclick="checkLevel4()">¡Ver si está bien! ✓</button>
                 <button class="btn btn-warning" onclick="backToLevels()">Volver 🔙</button>
             </div>
         </div>
@@ -842,8 +842,8 @@
         <!-- Level 5: Classify objects -->
         <div id="level-5-activity" class="activity-container">
             <div class="instruction-box">
-                <strong>Nivel 5: ¡Clasifica los objetos!</strong><br>
-                👉 Arrastra cada objeto al conjunto correcto según su categoría:
+                <strong>Juego 5: ¡Pon cada cosa en su lugar!</strong><br>
+                👉 Mueve cada cosa al círculo que le toca:
             </div>
 
             <div class="draggable-items" id="draggable-items-level5">
@@ -860,7 +860,7 @@
 
             <div class="multiple-sets-container">
                 <div class="drop-zone" data-accepts="escolar" style="border-color: #3498DB;">
-                    <div class="set-label" style="background: #3498DB;">Útiles Escolares 📚</div>
+                    <div class="set-label" style="background: #3498DB;">Para la escuela 📚</div>
                 </div>
                 <div class="drop-zone" data-accepts="juguete" style="border-color: #E67E22;">
                     <div class="set-label" style="background: #E67E22;">Juguetes 🎮</div>
@@ -871,8 +871,8 @@
             </div>
 
             <div class="button-container">
-                <button class="btn btn-success" onclick="checkLevel5()">¡Verificar! ✓</button>
-                <button class="btn btn-danger" onclick="resetLevel5()">Reiniciar 🔄</button>
+                <button class="btn btn-success" onclick="checkLevel5()">¡Ver si está bien! ✓</button>
+                <button class="btn btn-danger" onclick="resetLevel5()">Empezar de nuevo 🔄</button>
                 <button class="btn btn-warning" onclick="backToLevels()">Volver 🔙</button>
             </div>
         </div>
@@ -880,9 +880,9 @@
         <!-- Level 6: Final Exam -->
         <div id="level-6-activity" class="activity-container">
             <div class="instruction-box">
-                <strong>🏆 ¡EXAMEN FINAL! 🏆</strong><br>
-                ¡Demuestra todo lo que has aprendido!<br>
-                Responde correctamente para ser un EXPERTO en Conjuntos 🎓
+                <strong>🏆 ¡EXAMEN! 🏆</strong><br>
+                ¡A ver qué sabes!<br>
+                Responde bien para ganar 🎓
             </div>
 
             <div id="exam-questions">
@@ -895,10 +895,10 @@
                         </p>
                         <div class="quiz-options">
                             <div class="quiz-option" onclick="answerExam(1, 'b', this)">
-                                Un grupo de cosas que tienen algo en común
+                                Un grupo de cosas
                             </div>
                             <div class="quiz-option" onclick="answerExam(1, 'a', this)">
-                                Un solo objeto
+                                Una sola cosa
                             </div>
                             <div class="quiz-option" onclick="answerExam(1, 'c', this)">
                                 Un número
@@ -912,7 +912,7 @@
                     <div style="background: #FFF3E0; padding: 25px; border-radius: 15px; margin: 20px 0; border: 4px solid #FF9800;">
                         <h3 style="font-size: 2em; margin-bottom: 20px;">Pregunta 2 de 5:</h3>
                         <p style="font-size: 1.8em; margin-bottom: 20px;">
-                            ¿Cómo se llama cada cosa dentro de un conjunto?
+                            ¿Cómo se llama cada cosa del grupo?
                         </p>
                         <div class="quiz-options">
                             <div class="quiz-option" onclick="answerExam(2, 'a', this)">
@@ -933,7 +933,7 @@
                     <div style="background: #F3E5F5; padding: 25px; border-radius: 15px; margin: 20px 0; border: 4px solid #9C27B0;">
                         <h3 style="font-size: 2em; margin-bottom: 20px;">Pregunta 3 de 5:</h3>
                         <p style="font-size: 1.8em; margin-bottom: 20px;">
-                            ¿Cuántos elementos tiene este conjunto?
+                            ¿Cuántas flores hay?
                         </p>
                         <div class="set" style="border-color: #9C27B0; margin: 30px auto;">
                             <div class="item">🌸</div>
@@ -942,9 +942,9 @@
                             <div class="item">🌷</div>
                         </div>
                         <div class="quiz-options">
-                            <div class="quiz-option" onclick="answerExam(3, 'a', this)">3 elementos</div>
-                            <div class="quiz-option" onclick="answerExam(3, 'b', this)">4 elementos</div>
-                            <div class="quiz-option" onclick="answerExam(3, 'c', this)">5 elementos</div>
+                            <div class="quiz-option" onclick="answerExam(3, 'a', this)">3</div>
+                            <div class="quiz-option" onclick="answerExam(3, 'b', this)">4</div>
+                            <div class="quiz-option" onclick="answerExam(3, 'c', this)">5</div>
                         </div>
                     </div>
                 </div>
@@ -954,11 +954,11 @@
                     <div style="background: #E1F5FE; padding: 25px; border-radius: 15px; margin: 20px 0; border: 4px solid #03A9F4;">
                         <h3 style="font-size: 2em; margin-bottom: 20px;">Pregunta 4 de 5:</h3>
                         <p style="font-size: 1.8em; margin-bottom: 20px;">
-                            ¿Con qué letras nombramos los conjuntos?
+                            ¿Qué letras usa un conjunto?
                         </p>
                         <div class="quiz-options">
-                            <div class="quiz-option" onclick="answerExam(4, 'a', this)">Letras minúsculas (a, b, c)</div>
-                            <div class="quiz-option" onclick="answerExam(4, 'b', this)">Letras MAYÚSCULAS (A, B, C)</div>
+                            <div class="quiz-option" onclick="answerExam(4, 'a', this)">Letras chiquitas (a, b, c)</div>
+                            <div class="quiz-option" onclick="answerExam(4, 'b', this)">Letras GRANDES (A, B, C)</div>
                             <div class="quiz-option" onclick="answerExam(4, 'c', this)">Números (1, 2, 3)</div>
                         </div>
                     </div>
@@ -969,7 +969,7 @@
                     <div style="background: #FFEBEE; padding: 25px; border-radius: 15px; margin: 20px 0; border: 4px solid #F44336;">
                         <h3 style="font-size: 2em; margin-bottom: 20px;">Pregunta 5 de 5:</h3>
                         <p style="font-size: 1.8em; margin-bottom: 20px;">
-                            Observa estos dos conjuntos. ¿Cuál tiene MÁS elementos?
+                            Mira estos dos grupos. ¿Cuál tiene MÁS cosas?
                         </p>
                         <div class="multiple-sets-container">
                             <div>
@@ -1007,15 +1007,15 @@
         <div id="final-results" class="activity-container">
             <div class="celebration-message">
                 <div class="trophy">🏆</div>
-                <h2 style="font-size: 3em; margin: 20px 0;">¡FELICITACIONES!</h2>
+                <h2 style="font-size: 3em; margin: 20px 0;">¡MUY BIEN!</h2>
                 <p id="final-message" style="font-size: 1.8em; margin: 20px 0;"></p>
                 <div class="stars" id="final-stars"></div>
                 <p style="font-size: 2em; margin: 30px 0;">
-                    Puntuación Final: <span id="final-score" style="font-size: 1.5em; color: #FFD700;">0</span>/100
+                    Tu puntaje: <span id="final-score" style="font-size: 1.5em; color: #FFD700;">0</span>/100
                 </p>
             </div>
             <div class="button-container">
-                <button class="btn btn-success" onclick="restartAllLevels()">¡Jugar de Nuevo! 🔄</button>
+                <button class="btn btn-success" onclick="restartAllLevels()">¡Jugar otra vez! 🔄</button>
             </div>
         </div>
     </div>
@@ -1070,7 +1070,7 @@
         function startLearning() {
             studentName = document.getElementById('student-name').value.trim();
             if (studentName === '') {
-                alert('¡Por favor escribe tu nombre! 😊');
+                alert('¡Escribe tu nombre! 😊');
                 return;
             }
             playSound('success');
@@ -1084,7 +1084,7 @@
 
         function startLevel(levelNum) {
             if (levelNum > 1 && !completedLevels.includes(levelNum - 1)) {
-                showFeedback('¡Completa el nivel anterior primero! 🔒', 'error');
+                showFeedback('¡Termina el juego de antes! 🔒', 'error');
                 return;
             }
             playSound('click');
@@ -1122,13 +1122,13 @@
             if (selectedItems.length === 4) {
                 playSound('success');
                 completeLevel(1, 15);
-                showFeedback('¡Excelente! 🎉 ¡Todos son animales de granja!', 'success');
+                showFeedback('¡Muy bien! 🎉 ¡Son animales!', 'success');
                 setTimeout(() => {
                     backToLevels();
                 }, 2000);
             } else {
                 playSound('error');
-                showFeedback('¡Intenta seleccionar TODOS los animales! 🐄', 'error');
+                showFeedback('¡Toca TODOS los animales! 🐄', 'error');
             }
         }
 
@@ -1139,13 +1139,13 @@
             if (countB === 3 && countC === 5) {
                 playSound('success');
                 completeLevel(2, 20);
-                showFeedback('¡Perfecto! 🌟 ¡Contaste bien todos los elementos!', 'success');
+                showFeedback('¡Perfecto! 🌟 ¡Contaste bien!', 'success');
                 setTimeout(() => {
                     backToLevels();
                 }, 2000);
             } else {
                 playSound('error');
-                showFeedback('¡Cuenta de nuevo! Mira bien cuántos hay en cada conjunto 👀', 'error');
+                showFeedback('¡Cuenta otra vez! Mira bien 👀', 'error');
             }
         }
 
@@ -1209,13 +1209,13 @@
             if (correct) {
                 playSound('success');
                 completeLevel(3, 25);
-                showFeedback('¡Increíble! 🎨 ¡Clasificaste todo perfectamente!', 'success');
+                showFeedback('¡Súper! 🎨 ¡Todo bien!', 'success');
                 setTimeout(() => {
                     backToLevels();
                 }, 2000);
             } else {
                 playSound('error');
-                showFeedback('¡Revisa bien! 🔍 Algunas cosas están en el conjunto equivocado', 'error');
+                showFeedback('¡Revisa! 🔍 Algo está mal', 'error');
             }
         }
 
@@ -1239,16 +1239,16 @@
             if (isValid1 && isValid2 && name1 !== name2) {
                 playSound('success');
                 completeLevel(4, 20);
-                showFeedback(`¡Fantástico! 🔤 Usaste letras mayúsculas: ${name1} y ${name2}`, 'success');
+                showFeedback(`¡Genial! 🔤 Usaste ${name1} y ${name2}`, 'success');
                 setTimeout(() => {
                     backToLevels();
                 }, 2000);
             } else if (!isValid1 || !isValid2) {
                 playSound('error');
-                showFeedback('¡Recuerda usar LETRAS MAYÚSCULAS! Como A, B, C, D...', 'error');
+                showFeedback('¡Usa letras GRANDES! Como A, B, C...', 'error');
             } else {
                 playSound('error');
-                showFeedback('¡Los dos conjuntos deben tener letras DIFERENTES! 😊', 'error');
+                showFeedback('¡Pon letras DIFERENTES! 😊', 'error');
             }
         }
 
@@ -1274,13 +1274,13 @@
             if (correct) {
                 playSound('success');
                 completeLevel(5, 20);
-                showFeedback('¡Eres un genio! 🧩 ¡Clasificaste todo correctamente!', 'success');
+                showFeedback('¡Eres un campeón! 🧩 ¡Todo bien!', 'success');
                 setTimeout(() => {
                     backToLevels();
                 }, 2000);
             } else {
                 playSound('error');
-                showFeedback('¡Casi! 💪 Revisa que cada cosa esté en su conjunto correcto', 'error');
+                showFeedback('¡Casi! 💪 Revisa otra vez', 'error');
             }
         }
 
@@ -1329,16 +1329,16 @@
             const finalStars = document.getElementById('final-stars');
             
             if (totalScore >= 90) {
-                finalMessage.textContent = `${studentName}, ¡Eres un EXPERTO en Conjuntos! 🎓`;
+                finalMessage.textContent = `${studentName}, ¡Eres el mejor! 🎓`;
                 finalStars.innerHTML = '⭐⭐⭐⭐⭐';
             } else if (totalScore >= 75) {
-                finalMessage.textContent = `${studentName}, ¡Excelente trabajo! 🌟`;
+                finalMessage.textContent = `${studentName}, ¡Muy bien! 🌟`;
                 finalStars.innerHTML = '⭐⭐⭐⭐';
             } else if (totalScore >= 60) {
-                finalMessage.textContent = `${studentName}, ¡Muy bien! Sigue practicando 💪`;
+                finalMessage.textContent = `${studentName}, ¡Bien! Sigue jugando 💪`;
                 finalStars.innerHTML = '⭐⭐⭐';
             } else {
-                finalMessage.textContent = `${studentName}, ¡Buen intento! Practica más 😊`;
+                finalMessage.textContent = `${studentName}, ¡Bien! Practica más 😊`;
                 finalStars.innerHTML = '⭐⭐';
             }
             
